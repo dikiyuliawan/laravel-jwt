@@ -27,6 +27,12 @@ class UserController extends Controller
         return response()->json(compact('token'));
     }
 
+    public function logout(Request $request){
+        auth()->logout();
+
+        return response()->json(['message' => 'Succesfully logged out']);
+    }
+
     public function register(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -55,9 +61,9 @@ class UserController extends Controller
                 return response()->json(['user_not_found'], 404);
             }
         } catch (TokenExpiredException $e) {
-            return response()->json(['token_invalid'], 404);
+            return response()->json(['token_invalid'], 401);
         } catch (JWTException $e){
-            return response()->json(['token_absent'], 404);
+            return response()->json(['token_absent'], 401);
         }
 
         return response()->json(compact('user'));

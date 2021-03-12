@@ -26,3 +26,4 @@ Route::get('book', [BookController::class, 'book']);
 
 Route::get('bookall', [BookController::class, 'bookAuth'])->middleware('jwt.verify');
 Route::get('user', [UserController::class, 'getAuthenticatedUser'])->middleware('jwt.verify');
+Route::get('logout', [UserController::class, 'logout'])->middleware('jwt.verify');
